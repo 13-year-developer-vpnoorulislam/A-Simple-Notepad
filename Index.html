@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>A Simple Notepad</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+<Style>
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+.code-area textarea {
+  resize: none;
+  outline: none;
+  width: 100%;
+  height: 100vh;
+  font-size: 18px;
+  padding: 10px;
+  border: none;
+}
+img {
+    text-decoration: none;
+    color: black;
+}
+Input{
+    outline: none;
+    Padding: 10px;
+border: 4px solid black;
+Border-radius: 3px;
+Font-Size: 20px;
+width: 50%;
+margin: 0px;
+box-sizing: border-box;
+float: left;
+}
+button {
+    margin: 0px;
+    width: 16%;
+    outline: none;
+    Padding: 10px;
+border: 4px solid black;
+Border-radius: 3px;
+Font-Size: 20px;
+box-sizing: border-box;
+float: left;
+display: inline-block;
+}
+.dark-mode {
+    color: white;
+    background-color: #666;
+}
+.rotate {
+    transform: rotateY(180deg);
+}
+</Style>
+</head>
+<body>
+<input id="inputFileNameToSaveAs" autocapitalize="words" placeholder="Save As File Name"/>
+
+<button onclick="saveTextAsFile()" style="width: 17%;">Save</button>
+
+<button onclick="window.print()" style="width: 17%;">Print</button>
+
+<button onclick="myFunction()" style='font-size: 33px; padding: 2px'><i id="i" class="fa fa-adjust"></i></button>
+<div class="code-area">
+  <textarea id="htmlCode" required autocomplete="on" spellcheck="true" placeholder="Write Your Text here"></textarea>		
+</div>
+<Script>
+function myFunction() {
+   var element = document.getElementById("htmlCode");
+   element.classList.toggle("dark-mode");
+   var x = document.getElementById("i");
+   x.classList.toggle("rotate");
+}
+function saveTextAsFile()
+{
+	var textToSave = document.getElementById("htmlCode").value;
+	var textToSaveAsBlob = new Blob([textToSave], {type:"text/plain"});
+	var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
+	var fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value;
+
+	var downloadLink = document.createElement("a");
+	downloadLink.download = fileNameToSaveAs;
+	downloadLink.innerHTML = "Download File";
+	downloadLink.href = textToSaveAsURL;
+	downloadLink.onclick = destroyClickedElement;
+	downloadLink.style.display = "none";
+	document.body.appendChild(downloadLink);
+
+	downloadLink.click();
+}
+
+function destroyClickedElement(event)
+{
+	document.body.removeChild(event.target);
+}
+</Script>
+</body>
+</html>
